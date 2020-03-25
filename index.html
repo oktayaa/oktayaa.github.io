@@ -19,8 +19,8 @@ use-site-title: true
     </a>
 trying category link
     <p class="post-meta">
-      Posted on {{ post.date | date: site.date_format }} to {{
-           {% if post %}
+      Posted on {{ post.date | date: site.date_format }} to
+       {% if post %}
              {% assign categories = post.categories %}
            {% else %}
              {% assign categories = page.categories %}
@@ -29,7 +29,6 @@ trying category link
            <a href="{{site.baseurl}}/categories/#{{category|slugize}}">{{category}}</a>
            {% unless forloop.last %}&nbsp;{% endunless %}
            {% endfor %}
-      }}
     </p>
 
     <div class="post-entry-container">
