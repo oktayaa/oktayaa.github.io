@@ -1,10 +1,6 @@
 ---
 layout: post
 title: How to change LXC container IP
-#excerpt: >-
-# There's a quick and supported way of setting IP addresses for LXC containers.
-#  It is faster and simpler than trying to fix the IP either on the host dhcp
-#  side or the guest dhclient side.
 categories:
   - geeking out
 tags:
