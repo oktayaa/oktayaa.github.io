@@ -12,7 +12,7 @@ title: Categories
 {%- assign categories_list = site_categories | split:',' | sort -%}
 
 {%- for category in categories_list -%}
-    <a href="#{{- category -}}" class="btn btn-primary category-btn"><i class="fas fa-category" aria-hidden="true"></i>&nbsp;{{- category -}}&nbsp;({{site.categoriess[category].size}})</a>
+    <a href="#{{- category -}}" class="btn btn-primary category-btn"><i class="fas fa-category" aria-hidden="true"></i>&nbsp;{{- category -}}&nbsp;({{site.categories[category].size}})</a>
 {%- endfor -%}
 
 <div id="archives">
