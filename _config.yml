@@ -7,7 +7,7 @@ title: xpufx
 description: my findings thus far
 
 # url is the the website domain URL without a trailing slash
-url: "https://xpufx.com"
+url: "https://blog.xpufx.com"
 
 # baseurl should be an empty string
 #baseurl: ""
@@ -20,7 +20,7 @@ navbar-links:
   #Resources:
   #  - Beautiful Jekyll: "http://deanattali.com/beautiful-jekyll/"
   #  - Learn markdown: "http://www.markdowntutorial.com/"
-  Author's home: "xpufx.com"
+  Author's home: "https://xpufx.com"
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
