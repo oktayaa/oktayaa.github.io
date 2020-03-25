@@ -24,7 +24,8 @@ docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart always -v /va
 {% endhighlight %}
 
 
-Note: You'll notice that I am running the `docker` commands as `root`. My environment is within an `lxc` (lxd managed) container and does not expose itself to the Internet. Safe enough for my tinkering purposes.
+{: .box-note}
+You'll notice that I am running the `docker` commands as `root`. My environment is within an `lxc` (lxd managed) container and does not expose itself to the Internet. Safe enough for my tinkering purposes.
 
 Here's our roadmap. We're going to stop the container. Remove it. Remove the stale image we have for it.
 
