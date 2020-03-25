@@ -1,8 +1,6 @@
 ---
 layout: post
-title: How to upgrade `portainer` running as a docker container
-#excerpt: >-
-#  I thought it would be kind of cool if `portainer` could upgrade itself using its gui. Alas it falls into a chicken and egg situation and you need to step in and use the console. Here's how to upgrade portainer safely without losing configuration data.
+title: How to upgrade portainer running as a docker container
 categories:
   - geeking out
 tags:
