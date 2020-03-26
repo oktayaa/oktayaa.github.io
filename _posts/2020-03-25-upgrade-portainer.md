@@ -17,30 +17,29 @@ I'm going to assume you used `docker` without `swarm` when you installed your cu
 
 We have to make note of the original docker command we've used while initially setting up the container `portainer` lives in. Currently the default way to do that based on the official documentation is:
 
-~~~
-docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
-~~~
-
-
 {: .box-note}
+docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+
+
+
+{: .box-warning}
 You'll notice that I am running the `docker` commands as `root`. My environment is within an `lxc` (lxd managed) container and does not expose itself to the Internet. Safe enough for my tinkering purposes.
 
 Here's our roadmap. We're going to stop the container. Remove it. Remove the stale image we have for it.
 
 `portainer` is still running. Find it's name if you don't know and stop it.
 
-{% highlight code %}
+{: .box-note}
 root@portainer:~# docker ps
 CONTAINER ID        IMAGE                   COMMAND                  CREATED             STATUS              PORTS                                            NAMES
 f8299de001cc        dnknth/ldap-ui:latest   "/usr/bin/hypercorn …"   11 minutes ago      Up 5 minutes        0.0.0.0:32773->5000/tcp                          ldap-ui
 cb5affb59e4d        portainer/portainer     "/portainer"             7 days ago          Up 2 days           0.0.0.0:8000->8000/tcp, 0.0.0.0:9000->9000/tcp   portainer
-
 root@portainer:~# docker stop portainer
 portainer
 root@portainer:~# docker ps
 CONTAINER ID        IMAGE                   COMMAND                  CREATED             STATUS              PORTS                     NAMES
 f8299de001cc        dnknth/ldap-ui:latest   "/usr/bin/hypercorn …"   11 minutes ago      Up 6 minutes        0.0.0.0:32773->5000/tcp   ldap-ui
-{% endhighlight %}
+
 
 Now that it's stopped it's time to remove the instance and it's current old image.
 
