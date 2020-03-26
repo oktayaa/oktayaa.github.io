@@ -18,7 +18,7 @@ I'm going to assume you used `docker` without `swarm` when you installed your cu
 We have to make note of the original docker command we've used while initially setting up the container `portainer` lives in. Currently the default way to do that based on the official documentation is:
 
 {: .box-note}
->docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+<code>docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer</code>
 
 
 
