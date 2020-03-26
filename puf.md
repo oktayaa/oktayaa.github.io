@@ -4,6 +4,6 @@ title: Puf?
 subtitle: What the fuck is a puf?
 ---
 
-#this
+# this
 
--photo here-
+![puf at the beach][puf.png]
