@@ -11,6 +11,9 @@ tags:
   - docker
 published: true
 ---
+
+#debug
+
 >*I thought it would be kind of cool if `portainer` could upgrade itself using its gui. Alas it falls into a chicken and egg situation and you need to step in and use the console. Here's how to upgrade `portainer` safely without losing configuration data.*
 
 I'm going to assume you used `docker` without `swarm` when you installed your current version of `portainer` since I haven't tried swarms yet.
