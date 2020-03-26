@@ -6,4 +6,4 @@ subtitle: What the fuck is a puf?
 
 # this
 
-![puf at the beach](puf.png)
+![puf at the beach](/img/puf.jpg)
