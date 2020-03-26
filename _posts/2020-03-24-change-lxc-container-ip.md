@@ -17,12 +17,12 @@ In the below example we're changing the IP address for the container called `gra
 
 
 {: .box-note}
-{% highlight bash %}
+<pre>
 lxc stop grafana
 lxc network attach lxdbr0 grafana eth0 eth0
 lxc config device set grafana eth0 ipv4.address 10.0.0.30
 lxc start grafana
-{% endhighlight %}
+</pre>
 
 You can check the change using `lxc list`
 
