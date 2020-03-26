@@ -65,7 +65,6 @@ doveadm(user@DOMAINNAME): Error: Corrupted record in index cache file /var/spool
 </pre>
 
 Because the size of file does not match the size for it in the cache, dovecot concludes that the message must be corrupt and it doesn't try to read it.
-
 But is the file actually corrupt? Let's decompress it manually. While we're at it we'll actually check it's size too.
 
 {: .box-note}
@@ -87,7 +86,7 @@ The real kicker is, this particular email message opened and displayed fine when
 At one point I did have the inkling that compression support was missing somewhere but a cursory glance revealed that I had a bunch of zlib settings enabled in the config file. Besides I could actually read the emails so everything should have been configured correctly right?
 
 {: .box-warning}
-Wrong!! My zlib settings where inside particular imap, lmpt protocol blocks. These only apply to said protocols' subsystems. In order for doveadm to have support for various plugins, `zlib` in my case, those have to be declared in the global section. I.e out side of protocol blocks.
+Wrong!! My zlib settings where inside particular imap, lmpt protocol blocks. These only apply to said protocols' subsystems. In order for doveadm to have support for various plugins, `zlib` in my case, those have to be declared in the global section. i.e outside of protocol blocks.
 
 I think this was pretty dumb of me. However I haven't found any documentation about this particular error message where the headers were NOT actually corrupted.
 
