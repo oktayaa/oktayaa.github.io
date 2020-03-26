@@ -42,7 +42,8 @@ Here's our roadmap. We're going to stop the container. Remove it. Remove the sta
 Now that it's stopped it's time to remove the instance and it's current old image.
 
 {% highlight code %}
-`root@portainer:~# docker rm portainer
+~~~
+root@portainer:~# docker rm portainer
 portainer
 root@portainer:~# docker rmi portainer/portainer
 Untagged: portainer/portainer:latest
@@ -51,7 +52,7 @@ Deleted: sha256:10383f5b5720d7e1f5f824137034c69b7f6d82cc8aa33afcc4e9d508b561af77
 Deleted: sha256:01b8db7b5a6e256e37d9a57a6cdcdd07c33fe5051b5d21117ad4842723f68083
 Deleted: sha256:dd4969f97241b9aefe2a70f560ce399ee9fa0354301c9aef841082ad52161ec5
 root@portainer:~#
-``
+~~~
 {% endhighlight %}
 
 Good riddance. Now it's time to get the new fresh goodies.
