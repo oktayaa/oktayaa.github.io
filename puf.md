@@ -4,6 +4,6 @@ title: Puf?
 subtitle: What the fuck is a puf?
 ---
 
-# this
+## this
 
 ![puf at the beach](/img/puf.jpg)
