@@ -12,7 +12,7 @@ tags:
 published: true
 ---
 
-#debug
+#debug1
 
 >*I thought it would be kind of cool if `portainer` could upgrade itself using its gui. Alas it falls into a chicken and egg situation and you need to step in and use the console. Here's how to upgrade `portainer` safely without losing configuration data.*
 
@@ -21,7 +21,9 @@ I'm going to assume you used `docker` without `swarm` when you installed your cu
 We have to make note of the original docker command we've used while initially setting up the container `portainer` lives in. Currently the default way to do that based on the official documentation is:
 
 {: .box-note}
+<pre>
    docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+</pre>
 
 {: .box-warning}
 You'll notice that I am running the `docker` commands as `root`. My environment is within an `lxc` (lxd managed) container and does not expose itself to the Internet. Safe enough for my tinkering purposes.
