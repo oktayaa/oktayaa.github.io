@@ -27,7 +27,7 @@ doveadm(user@***DOMAINNAME**): Error: fetch(hdr) failed for box=SpamCheck/Spam u
 Although you can compress old email files too, it is not strictly necessary (and is a complicated process anyway) since dovecot is able to distinguish and read plain emails along with those that are compressed, regardless of the compression algorithm.
 
 {: .box-warning}
-With one caveat. And this is what got me. *You have to enable compression methods that you use for all subsystems that need it. doveadm is NOT excluded from this.*
+With one caveat. And this is what got me. *You have to enable the compression methods that you use for all subsystems that need it. doveadm is NOT excluded from this.*
 
 {: .box-note}
 I changed all occurences of my actual domain name to ***DOMAINNAME*** in the following.
@@ -36,6 +36,6 @@ I changed all occurences of my actual domain name to ***DOMAINNAME*** in the fol
 
 {: .box-note}
 <pre>
-#doveadm search -u user@***DOMAINNAME*** mailbox SpamCheck/Spam
+#doveadm search -u user@\***DOMAINNAME\*** mailbox SpamCheck/Spam
 d1adce0f1722685e4a010000233c2ca8 10
 </pre>
