@@ -17,7 +17,7 @@ url: "https://blog.xpufx.com"
 # List of links in the navigation bar
 navbar-links:
   Contact: "aboutme"
-  Articles: "/"
+  Articles: ""
     - All Articles: "/"
     - By Category: "/categories/"
     - By Tags: "/tags/"
