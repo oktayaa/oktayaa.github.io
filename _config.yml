@@ -16,11 +16,11 @@ url: "https://blog.xpufx.com"
 
 # List of links in the navigation bar
 navbar-links:
-  Contact: "aboutme"
   Articles:
     - All Articles: "/"
     - By Category: "categories"
     - By Tags: "tags"
+  Contact: "aboutme"
   Parent Website: "https://xpufx.com"
   Puf?: "puf"
 
