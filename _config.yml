@@ -22,6 +22,7 @@ navbar-links:
     - By Category: "categories"
     - By Tags: "tags"
   Parent Website: "https://xpufx.com"
+  Puf?: "puf"
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
