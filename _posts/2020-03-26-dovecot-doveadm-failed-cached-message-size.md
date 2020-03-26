@@ -14,13 +14,14 @@ published: true
 
 Here's what the error message I encountered while using doveadm to read a message looked like.
 
-```
+{: .box-note}
+<pre>
 # doveadm fetch -u user@***DOMAINNAME** hdr mailbox SpamCheck/Spam uid 10
 doveadm(user@***DOMAINNAME**): Error: Mailbox SpamCheck/Spam: UID=10: read(/var/spool/mail/virtual/***DOMAINNAME**/public/.Spam/cur/1583888147.M606102P10872.MAILDOMAIN,S=5367,W=5455:2,S) failed: Cached message size larger than expected (5367 > 2476, box=SpamCheck/Spam, UID=10) (read reason=mail stream)
 doveadm(user@***DOMAINNAME**): Error: Corrupted record in index cache file /var/spool/mail/virtual/***DOMAINNAME**/public/.Spam/dovecot.index.cache: UID 10: Broken physical size in mailbox SpamCheck/Spam: read(/var/spool/mail/virtual/***DOMAINNAME**/public/.Spam/cur/1583888147.M606102P10872.MAILDOMAIN,S=5367,W=5455:2,S) failed: Cached message size larger than expected (5367 > 2476, box=SpamCheck/Spam, UID=10)
 doveadm(user@***DOMAINNAME**): Error: Mailbox SpamCheck/Spam: UID=10: read(/var/spool/mail/virtual/***DOMAINNAME**/public/.Spam/cur/1583888147.M606102P10872.MAILDOMAIN,S=5367,W=5455:2,S) failed: Cached message size larger than expected (5367 > 2476, box=SpamCheck/Spam, UID=10) (read reason=)
 doveadm(user@***DOMAINNAME**): Error: fetch(hdr) failed for box=SpamCheck/Spam uid=10: Mailbox SpamCheck/Spam: UID=10: read(/var/spool/mail/virtual/***DOMAINNAME**/public/.Spam/cur/1583888147.M606102P10872.MAILDOMAIN,S=5367,W=5455:2,S) failed: Cached message size larger than expected (5367 > 2476, box=SpamCheck/Spam, UID=10) (read reason=)
-```
+</pre>
 
 `dovecot` has a nice feature where its `imap` module as well as all of its components (lmtp,doveadm etc) can read and write compressed email files. You would use this if you are running low on space and want to preserve some until you can upgrade.
 
