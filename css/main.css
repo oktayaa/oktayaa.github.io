@@ -780,11 +780,11 @@ pre {
 }
 
 #full-tags-list .tag-entry a {
-  font-size: 20px;
+  font-size: 14px;
 }
 
 #full-tags-list .tag-entry .entry-date {
   color: #808080;
   font-style: italic;
-  font-size: 16px;
+  font-size: 12px;
 }
