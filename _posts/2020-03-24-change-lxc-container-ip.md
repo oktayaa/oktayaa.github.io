@@ -16,7 +16,7 @@ In the below example we're changing the IP address for the container called `gra
 
 
 
-
+{: .box-note}
 {% highlight bash %}
 lxc stop grafana
 lxc network attach lxdbr0 grafana eth0 eth0
