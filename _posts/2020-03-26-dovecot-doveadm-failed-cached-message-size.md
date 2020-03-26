@@ -1,6 +1,6 @@
 ---
 layout: post
-title: dovecot/doveadm "failed: cache message size"
+title: dovecot/doveadm \"failed: cache message size\"
 categories:
   - geeking out
 tags:
@@ -45,9 +45,9 @@ Let's try to read its headers.
 
 {: .box-note}
 <pre>
-# doveadm fetch -u user@\***DOMAINNAME** hdr mailbox SpamCheck/Spam uid 10
-doveadm(user@\***DOMAINNAME**): Error: Mailbox SpamCheck/Spam: UID=10: read(/var/spool/mail/virtual/\***DOMAINNAME**/public/.Spam/cur/1583888147.M606102P10872.MAILDOMAIN,S=5367,W=5455:2,S) failed: Cached message size larger than expected (5367 > 2476, box=SpamCheck/Spam, UID=10) (read reason=mail stream)
-doveadm(user@\***DOMAINNAME**): Error: Corrupted record in index cache file /var/spool/mail/virtual/\***DOMAINNAME**/public/.Spam/dovecot.index.cache: UID 10: Broken physical size in mailbox SpamCheck/Spam: read(/var/spool/mail/virtual/***DOMAINNAME**/public/.Spam/cur/1583888147.M606102P10872.MAILDOMAIN,S=5367,W=5455:2,S) failed: Cached message size larger than expected (5367 > 2476, box=SpamCheck/Spam, UID=10)
-doveadm(user@***DOMAINNAME**): Error: Mailbox SpamCheck/Spam: UID=10: read(/var/spool/mail/virtual/***DOMAINNAME**/public/.Spam/cur/1583888147.M606102P10872.MAILDOMAIN,S=5367,W=5455:2,S) failed: Cached message size larger than expected (5367 > 2476, box=SpamCheck/Spam, UID=10) (read reason=)
+# doveadm fetch -u user@***DOMAINNAME** hdr mailbox SpamCheck/Spam uid 10
+doveadm(user@***DOMAINNAME**): Error: Mailbox SpamCheck/Spam: UID=10: read(/var/spool/mail/virtual/***DOMAINNAME**/public/.Spam/cur/1583888147.M606102P10872.MAILDOMAIN,S=5367,W=5455:2,S) failed: Cached message size larger than expected (5367 > 2476, box=SpamCheck/Spam, UID=10) (read reason=mail stream)
+doveadm(user@***DOMAINNAME**): Error: Corrupted record in index cache file /var/spool/mail/virtual/***DOMAINNAME**/public/.Spam/dovecot.index.cache: UID 10: Broken physical size in mailbox SpamCheck/Spam: read(/var/spool/mail/virtual/***DOMAINNAME**/public/.Spam/cur/1583888147.M606102P10872.MAILDOMAIN,S=5367,W=5455:2,S) failed: Cached message size larger than expected (5367 > 2476, box=SpamCheck/Spam, UID=10)
+doveadm(user@***DOMAINNAME**): Error: Mailbox SpamCheck/Spam: UID=10: read(/var/spool/mail/virtual***DOMAINNAME**/public/.Spam/cur/1583888147.M606102P10872.MAILDOMAIN,S=5367,W=5455:2,S) failed: Cached message size larger than expected (5367 > 2476, box=SpamCheck/Spam, UID=10) (read reason=)
 doveadm(user@***DOMAINNAME**): Error: fetch(hdr) failed for box=SpamCheck/Spam uid=10: Mailbox SpamCheck/Spam: UID=10: read(/var/spool/mail/virtual/***DOMAINNAME**/public/.Spam/cur/1583888147.M606102P10872.MAILDOMAIN,S=5367,W=5455:2,S) failed: Cached message size larger than expected (5367 > 2476, box=SpamCheck/Spam, UID=10) (read reason=)
 </pre>
