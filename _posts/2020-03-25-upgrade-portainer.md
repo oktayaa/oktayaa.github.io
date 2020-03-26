@@ -23,8 +23,8 @@ We have to make note of the original docker command we've used while initially s
 
 
 {: .box-warning}
-`You'll notice that I am running the `docker` commands as `root`. My environment is within an `lxc` (lxd managed) container and does not expose itself to the Internet. Safe enough for my tinkering purposes.
-`
+You'll notice that I am running the `docker` commands as `root`. My environment is within an `lxc` (lxd managed) container and does not expose itself to the Internet. Safe enough for my tinkering purposes.
+
 Here's our roadmap. We're going to stop the container. Remove it. Remove the stale image we have for it.
 
 `portainer` is still running. Find it's name if you don't know and stop it.
