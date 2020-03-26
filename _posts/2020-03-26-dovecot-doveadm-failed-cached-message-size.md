@@ -22,7 +22,6 @@ doveadm(user@DOMAINNAME): Error: Corrupted record in index cache file /var/spool
 </pre>
 
 `dovecot` has a nice feature where its `imap` module as well as all of its components (lmtp,doveadm etc) can read and write compressed email files. You would use this if you are running low on space and want to preserve some until you can upgrade.
-
 Although you can compress old email files too, it is not strictly necessary (and is a complicated process anyway) since dovecot is able to distinguish and read plain emails along with those that are compressed, regardless of the compression algorithm.
 
 {: .box-warning}
