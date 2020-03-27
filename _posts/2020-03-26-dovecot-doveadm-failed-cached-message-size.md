@@ -41,11 +41,11 @@ d1adce0f1722685e4a010000233c2ca8 10
 For the rest of this we'll concentrate on this one mail message with the `uid` discovered above.
 Let's try to read its headers.
 
-{: .box-note}
+```
 <pre>
 # doveadm fetch -u user@DOMAINNAME hdr mailbox SpamCheck/Spam uid 10
 </pre>
-
+```
 which results in a couple of error messages that repeat a few times.
 
 
