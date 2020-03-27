@@ -48,7 +48,7 @@ Let's try to read its headers.
 
 which results in a couple of error messages that repeat a few times.
 
-{: .box-note}
+
 <pre>
 doveadm(user@DOMAINNAME): Error: Mailbox SpamCheck/Spam: UID=10: read(/var/spool/mail/virtual/DOMAINNAME/public/.Spam/cur/1583888147.M606102P10872.MAILDOMAIN,S=5367,W=5455:2,S) failed: Cached message size larger than expected (5367 > 2476, box=SpamCheck/Spam, UID=10) (read reason=mail stream)
 </pre>
@@ -59,7 +59,7 @@ This particular message was compressed with `bz2` via `zlib` by dovecot when it 
 
 The second error message this generates is as follows.
 
-{: .box-note}
+
 <pre>
 doveadm(user@DOMAINNAME): Error: Corrupted record in index cache file /var/spool/mail/virtual/DOMAINNAME/public/.Spam/dovecot.index.cache: UID 10: Broken physical size in mailbox SpamCheck/Spam:
 </pre>
@@ -67,7 +67,7 @@ doveadm(user@DOMAINNAME): Error: Corrupted record in index cache file /var/spool
 Because the size of file does not match the size for it in the cache, dovecot concludes that the message must be corrupt and it doesn't try to read it.
 But is the file actually corrupt? Let's decompress it manually. While we're at it we'll actually check it's size too.
 
-{: .box-note}
+
 <pre>
 # bzcat 1583888147.M606102P10872.MAILDOMAIN,S=5367,W=5455:2,S > /tmp/email.txt
 </pre>
