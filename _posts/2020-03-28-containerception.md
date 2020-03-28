@@ -1,86 +1,123 @@
 ---
 layout: post
-title: 'dovecot/doveadm "failed:  cache message size"'
+title: 'it's virtual all the way down'
 categories:
   - geeking out
 tags:
   - linux
-  - dovecot
-  - doveadm
+  - lxc
+  - lxd
+  - docker
+  - kvm
+  - qemu
+
 published: true
 ---
 
->*This one stumped me for a while and I only realized what was wrong after getting ready to submit a bug report to `dovecot`. I am putting it here since it's not a common case and it might help some people. I found no help online when it happened to me.*
+>*Various virtualization and container technologies nest within each other very well and provide different levels of isolation. Here's one example from my server*
 
-Here's what the error message I encountered while using doveadm to read a message looked like.
-
-```
-# doveadm fetch -u user@DOMAINNAME hdr mailbox SpamCheck/Spam uid 10
-doveadm(user@DOMAINNAME): Error: Mailbox SpamCheck/Spam: UID=10: read(/var/spool/mail/virtual/DOMAINNAME/public/.Spam/cur/1583888147.M606102P10872.MAILDOMAIN,S=5367,W=5455:2,S) failed: Cached message size larger than expected (5367 > 2476, box=SpamCheck/Spam, UID=10) (read reason=mail stream)
-doveadm(user@DOMAINNAME): Error: Corrupted record in index cache file /var/spool/mail/virtual/DOMAINNAME/public/.Spam/dovecot.index.cache: UID 10: Broken physical size in mailbox SpamCheck/Spam: [...]
-```
-
-`dovecot` has a nice feature where its `imap` module as well as all of its components (lmtp,doveadm etc) can read and write compressed email files. You would use this if you are running low on space and want to preserve some until you can upgrade.
-Although you can compress old email files too, it is not strictly necessary (and is a complicated process anyway) since dovecot is able to distinguish and read plain emails along with those that are compressed, regardless of the compression algorithm.
-
-{: .box-warning}
-With one caveat. And this is what got me. *You have to enable the compression methods that you use for all subsystems that need it. doveadm is NOT excluded from this.*
-
-{: .box-note}
-I changed all occurences of my actual domain name to `DOMAINNAME` in the following.
-
-Let's step back a bit and start over. I first search the mailbox to get the `uid` of a message. We're looking for this in that particular user's `SpamCheck/Spam` mailbox. (We're using this public shared mailbox for `bayes` operations. I will cover public shared mailboxes with dovecot later.)
+The main machine is not virtual at all. It's a pretty beefy dedicated server or if we're being hip, `bare-metal`.
 
 ```
-#doveadm search -u user@DOMAINNAME mailbox SpamCheck/Spam
-d1adce0f1722685e4a010000233c2ca8 10
+[oktay@kvm ~]$ uname -a
+Linux kvm.DOMAIN.com 3.10.0-1062.18.1.el7.x86_64 #1 SMP Tue Mar 17 23:49:17 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
 ```
 
-For the rest of this we'll concentrate on this one mail message with the `uid` discovered above.
-Let's try to read its headers.
+I am running `qemu-kvm` with `libvirt` on this machine.
 
 ```
-# doveadm fetch -u user@DOMAINNAME hdr mailbox SpamCheck/Spam uid 10
-```
-which results in a couple of error messages that repeat a few times.
-
-
-```
-doveadm(user@DOMAINNAME): Error: Mailbox SpamCheck/Spam: UID=10: read(/var/spool/mail/virtual/DOMAINNAME/public/.Spam/cur/1583888147.M606102P10872.MAILDOMAIN,S=5367,W=5455:2,S) failed: Cached message size larger than expected (5367 > 2476, box=SpamCheck/Spam, UID=10) (read reason=mail stream)
-```
-
-What's significant here is that doveadm is looking at the message size first and comparing it to what it has in the cache file for the same message. Size is denoated by the `S=` and is `5367` in this case. However dovecot claims that the size should have been `2476` according to its cache.
-
-This particular message was compressed with `bz2` via `zlib` by dovecot when it was delivered (I used first `lda`, later `lmtp` for local delivery rather than the mechanism provided by my MTA `postfix` in order to have a single auth database provided by dovecot and backed by LDAP).
-
-The second error message this generates is as follows.
-```
-doveadm(user@DOMAINNAME): Error: Corrupted record in index cache file /var/spool/mail/virtual/DOMAINNAME/public/.Spam/dovecot.index.cache: UID 10: Broken physical size in mailbox SpamCheck/Spam:
+[oktay@kvm ~]$ virsh list
+ Id    Name                           State
+----------------------------------------------------
+ 5     UbuntuServerOktay              running
+ 6     ubuntu16.04server              running
+ 7     ERPCentos7New            running
+ 8     virt01.debian8                 running
 ```
 
-Because the size of file does not match the size for it in the cache, dovecot concludes that the message must be corrupt and it doesn't try to read it.
-But is the file actually corrupt? Let's decompress it manually. While we're at it we'll actually check it's size too.
-
+Let's pick one vm that has nested virtual stuffs in it.
 
 ```
-# bzcat 1583888147.M606102P10872.MAILDOMAIN,S=5367,W=5455:2,S > /tmp/email.txt
-# ls -alF /tmp/email.txt
--rw-r--r-- 1 root root 5367 Mar 11 02:08 /tmp/email.txt
+[oktay@kvm ~]
+[oktay@kvm ~]$ virsh console 5
+Connected to domain UbuntuServerOktay
+Escape character is ^]
+
+xpufx login: oktay
+Password:
+Last login: Sat Mar 28 11:35:47 UTC 2020 on ttyS0
+Welcome to Ubuntu 19.10 (GNU/Linux 5.3.0-42-generic x86_64)
+```
+This is a virtual machine running Ubuntu with lxd installed from `snap`. I am not really sold on snaps. To me they sound like installing software on OSX but it's how lxd is installed so I didn't fight it. (I do remove snapd on lxc images. Yes even the minimal cloud images have it.)
+
+I have a bunch of lxc containers here. lxc containers are usually bigger than app containers, but they provide a lot more flexibility since they provide a whole OS environment.
+
+```
+oktay@xpufx:~$ lxc list -c n,4
++-------------+----------------------+
+|    NAME     |         IPV4         |
++-------------+----------------------+
+| alpine-edge | 10.50.0.250 (eth0)   |
++-------------+----------------------+
+| dockers     | 172.17.0.1 (docker0) |
+|             | 10.50.0.50 (eth0)    |
++-------------+----------------------+
+| eaonmin     | 10.50.0.192 (eth0)   |
++-------------+----------------------+
+| grafana     | 10.50.0.30 (eth0)    |
++-------------+----------------------+
+| lamp        | 10.50.0.20 (eth0)    |
++-------------+----------------------+
+| pihole      |                      |
++-------------+----------------------+
+| rundeck     | 10.50.0.60 (eth0)    |
++-------------+----------------------+
+oktay@xpufx:~$
+```
+Let's pick one and keep digging.
+
+```
+oktay@xpufx:~$ lxc exec dockers bash
+root@dockers:~# docker container ls --format 'table {{.Names}}\t{{.Status}}'
+NAMES               STATUS
+telegraf            Up 13 hours
+influxdb            Up 13 hours
+grafana             Up 13 hours
+privoxy             Up 13 hours
+pihole              Up 14 hours (healthy)
+portainer           Up 14 hours
+```
+I am in the process of moving some lxc containers into docker containers. That's why the same names such as portainer and grafana appear in multiple places.
+
+Here's a good example of the difference between what lxc and docker should be used for. The `grafana` instance in lxc actually also includes `influxdb` and `telegraf` installed with OS packages. In docker, I split them up. One app per container is suggested, and makes sense, although it is not enforced by docker.
+
+```
+Here we hit bottom. Let's see what's going on in a pihole docker container, running in an Ubuntu LXC host, that's running in a qemu VM, installed on a dedicated server.
+
+```
+root@dockers:~# docker exec -it pihole bash
+root@1215803f4731:/# ps -axw
+  PID TTY      STAT   TIME COMMAND
+    1 ?        Ss     0:00 s6-svscan -t0 /var/run/s6/services
+   28 ?        S      0:00 s6-supervise s6-fdholderd
+ 1282 ?        S      0:00 s6-supervise lighttpd
+ 1284 ?        S      0:00 s6-supervise cron
+ 1285 ?        S      0:00 s6-supervise pihole-FTL
+ 1287 ?        Ss     0:00 bash ./run
+ 1289 ?        Ss     0:00 bash ./run
+ 1299 ?        S      0:09 lighttpd -D -f /etc/lighttpd/lighttpd.conf
+ 1303 ?        S      0:00 /usr/sbin/cron -f
+ 1325 ?        Ss     0:00 /usr/bin/php-cgi
+ 1326 ?        S      0:02 /usr/bin/php-cgi
+ 1327 ?        S      0:02 /usr/bin/php-cgi
+ 1328 ?        S      0:02 /usr/bin/php-cgi
+ 1329 ?        S      0:02 /usr/bin/php-cgi
+ 2061 ?        Ss     0:00 bash ./run
+ 2065 ?        Sl     0:59 pihole-FTL no-daemon
+ 5565 pts/0    Ss+    0:00 bash
+26529 pts/1    Ss     0:00 bash
+26604 pts/1    R+     0:00 ps -axw
+root@1215803f4731:/#
 ```
 
-As you can see the file decompresses without an error and if you look at the file size, it is the same as the `S=` field in the filename.
-
-When I actually inspected this file with `cat` I saw that it was a regular email header. It wasn't incorrect, or corrupted. I won't paste that whole thing because there's nothing interesting in it. Just a boring email header with From's and Reply To's and everything.
-
-The real kicker is, this particular email message opened and displayed fine when using an `IMAP` client.
-
-At one point I did have the inkling that compression support was missing somewhere but a cursory glance revealed that I had a bunch of zlib settings enabled in the config file. Besides I could actually read the emails so everything should have been configured correctly right?
-
-{: .box-warning}
-Wrong!! My zlib settings where inside particular imap, lmpt protocol blocks. These only apply to said protocols' subsystems. In order for doveadm to have support for various plugins, `zlib` in my case, those have to be declared in the global section. i.e outside of protocol blocks.
-
-I think this was pretty dumb of me. However I haven't found any documentation about this particular error message where the headers were NOT actually corrupted.
-
-It would be nice if doveadm documentation mentioned something at least in passing.
-
-Well. Now you (I) know.
+I am personally happy that pihole's <em>selection of things that I wouldn't have exactly done that way</em> are contained as deep down as possible.
