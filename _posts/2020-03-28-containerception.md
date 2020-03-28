@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'it's virtual all the way down'
+title: "it's virtual all the way down"
 categories:
   - geeking out
 tags:
@@ -89,9 +89,8 @@ portainer           Up 14 hours
 ```
 I am in the process of moving some lxc containers into docker containers. That's why the same names such as portainer and grafana appear in multiple places.
 
-Here's a good example of the difference between what lxc and docker should be used for. The `grafana` instance in lxc actually also includes `influxdb` and `telegraf` installed with OS packages. In docker, I split them up. One app per container is suggested, and makes sense, although it is not enforced by docker.
+Here's a good point to mention where one should use lxc vs docker. The `grafana` instance in lxc actually also includes `influxdb` and `telegraf` installed with OS packages. In docker, I split them up. One app per container is suggested, and makes sense, although it is not enforced by docker.
 
-```
 Here we hit bottom. Let's see what's going on in a pihole docker container, running in an Ubuntu LXC host, that's running in a qemu VM, installed on a dedicated server.
 
 ```
