@@ -98,7 +98,7 @@ I am in the process of moving some lxc containers into docker containers. That's
 
 This is a good time to mention when one should use lxc vs docker. The `grafana` instance in lxc actually also includes `influxdb` and `telegraf` installed with OS packages. In docker, I split them up. One app per container is suggested, and makes sense, although it is not enforced by docker.
 
-Moving on. We're at the bottom of the virtualization staircase. Let's see what's going on in a pihole docker container, running in an Ubuntu LXC host, that's running in a qemu VM, installed on a dedicated server.
+Moving on. We're at the bottom of the virtualization staircase. Let's see what's going on in a pihole docker container, running in an Ubuntu LXC host, that's running in an Ubutu qemu VM, installed on a dedicated server running Centos 7.
 ```
 
 root@dockers:~# docker exec -it pihole bash
