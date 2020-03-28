@@ -16,7 +16,7 @@ published: true
 
 >*Various virtualization and container technologies nest within each other very well and provide different levels of isolation. Here's one example from my server.*
 
-The main machine is not virtual at all. It's a pretty beefy dedicated server or if we're being hip, `bare-metal
+The main machine is not virtual at all. It's a pretty beefy dedicated server or if we're being hip, `bare-metal`
 
 
 ```
@@ -42,7 +42,6 @@ Let's pick one vm that has nested virtual stuffs in it.
 
 
 ```
-[oktay@kvm ~]
 [oktay@kvm ~]$ virsh console 5
 Connected to domain UbuntuServerOktay
 Escape character is ^]
