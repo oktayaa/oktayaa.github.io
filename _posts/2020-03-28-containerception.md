@@ -14,16 +14,19 @@ tags:
 published: true
 ---
 
->*Various virtualization and container technologies nest within each other very well and provide different levels of isolation. Here's one example from my server*
+>*Various virtualization and container technologies nest within each other very well and provide different levels of isolation. Here's one example from my server.*
 
-The main machine is not virtual at all. It's a pretty beefy dedicated server or if we're being hip, `bare-metal`.
+The main machine is not virtual at all. It's a pretty beefy dedicated server or if we're being hip, `bare-metal
+
 
 ```
 [oktay@kvm ~]$ uname -a
 Linux kvm.DOMAIN.com 3.10.0-1062.18.1.el7.x86_64 #1 SMP Tue Mar 17 23:49:17 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
 ```
 
+
 I am running `qemu-kvm` with `libvirt` on this machine.
+
 
 ```
 [oktay@kvm ~]$ virsh list
@@ -37,6 +40,7 @@ I am running `qemu-kvm` with `libvirt` on this machine.
 
 Let's pick one vm that has nested virtual stuffs in it.
 
+
 ```
 [oktay@kvm ~]
 [oktay@kvm ~]$ virsh console 5
@@ -48,6 +52,7 @@ Password:
 Last login: Sat Mar 28 11:35:47 UTC 2020 on ttyS0
 Welcome to Ubuntu 19.10 (GNU/Linux 5.3.0-42-generic x86_64)
 ```
+
 This is a virtual machine running Ubuntu with lxd installed from `snap`. I am not really sold on snaps. To me they sound like installing software on OSX but it's how lxd is installed so I didn't fight it. (I do remove snapd on lxc images. Yes even the minimal cloud images have it.)
 
 I have a bunch of lxc containers here. lxc containers are usually bigger than app containers, but they provide a lot more flexibility since they provide a whole OS environment.
@@ -74,6 +79,7 @@ oktay@xpufx:~$ lxc list -c n,4
 +-------------+----------------------+
 oktay@xpufx:~$
 ```
+
 Let's pick one and keep digging.
 
 ```
@@ -87,13 +93,14 @@ privoxy             Up 13 hours
 pihole              Up 14 hours (healthy)
 portainer           Up 14 hours
 ```
+
 I am in the process of moving some lxc containers into docker containers. That's why the same names such as portainer and grafana appear in multiple places.
 
 This is a good time to mention when one should use lxc vs docker. The `grafana` instance in lxc actually also includes `influxdb` and `telegraf` installed with OS packages. In docker, I split them up. One app per container is suggested, and makes sense, although it is not enforced by docker.
 
 Moving on. We're at the bottom of the virtualization staircase. Let's see what's going on in a pihole docker container, running in an Ubuntu LXC host, that's running in a qemu VM, installed on a dedicated server.
-
 ```
+
 root@dockers:~# docker exec -it pihole bash
 root@1215803f4731:/# ps -axw
   PID TTY      STAT   TIME COMMAND
