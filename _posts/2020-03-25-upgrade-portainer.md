@@ -14,6 +14,8 @@ published: true
 
 >*I thought it would be kind of cool if `portainer` could upgrade itself using its gui. Alas it falls into a chicken and egg situation and you need to step in and use the console. Here's how to upgrade `portainer` safely without losing configuration data.*
 
+Short Version: make sure the portainer data directory is mounted as a persistent volume and recreate the container using the latest docker image. Here's how it's done.
+
 I'm going to assume you used `docker` without `swarm` when you installed your current version of `portainer` since I haven't tried swarms yet.
 
 We have to make note of the original docker command we've used while initially setting up the container `portainer` lives in. Currently the default way to do that based on the official documentation is:
