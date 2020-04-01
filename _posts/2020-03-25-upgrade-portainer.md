@@ -21,10 +21,9 @@ I'm going to assume you used `docker` without `swarm` when you installed your cu
 
 We have to make note of the original docker command we've used while initially setting up the container `portainer` lives in. Currently the default way to do that based on the official documentation is:
 
-{: .box-note}
-<pre>
+```
    docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
-</pre>
+```
 
 {: .box-warning}
 You'll notice that I am running the `docker` commands as `root`. My environment is within an `lxc` (lxd managed) container and does not expose itself to the Internet. Safe enough for my tinkering purposes.
@@ -33,8 +32,7 @@ Here's our roadmap. We're going to stop the container. Remove it. Remove the sta
 
 `portainer` is still running. Find it's name if you don't know and stop it.
 
-{: .box-note}
-<pre>
+```
    root@portainer:~# docker ps
    CONTAINER ID        IMAGE                   COMMAND                  CREATED             STATUS              PORTS                                            NAMES
    f8299de001cc        dnknth/ldap-ui:latest   "/usr/bin/hypercorn …"   11 minutes ago      Up 5 minutes        0.0.0.0:32773->5000/tcp                          ldap-ui
@@ -44,12 +42,11 @@ Here's our roadmap. We're going to stop the container. Remove it. Remove the sta
    root@portainer:~# docker ps
    CONTAINER ID        IMAGE                   COMMAND                  CREATED             STATUS              PORTS                     NAMES
    f8299de001cc        dnknth/ldap-ui:latest   "/usr/bin/hypercorn …"   11 minutes ago      Up 6 minutes        0.0.0.0:32773->5000/tcp   ldap-ui
-</pre>
+```
 
 Now that it's stopped it's time to remove the instance and it's current old image.
 
-{: .box-note}
-<pre>
+```
 root@portainer:~# docker rm portainer
 portainer
 root@portainer:~# docker rmi portainer/portainer
@@ -59,12 +56,11 @@ Deleted: sha256:10383f5b5720d7e1f5f824137034c69b7f6d82cc8aa33afcc4e9d508b561af77
 Deleted: sha256:01b8db7b5a6e256e37d9a57a6cdcdd07c33fe5051b5d21117ad4842723f68083
 Deleted: sha256:dd4969f97241b9aefe2a70f560ce399ee9fa0354301c9aef841082ad52161ec5
 root@portainer:~#
-</pre>
+```
 
 Good riddance. Now it's time to get the new fresh goodies.
 
-{: .box-note}
-<pre>
+```
 root@portainer:~# docker pull portainer/portainer:latest
 latest: Pulling from portainer/portainer
 d1e017099d17: Pull complete
@@ -72,25 +68,23 @@ a7dca5b5a9e8: Pull complete
 Digest: sha256:4ae7f14330b56ffc8728e63d355bc4bc7381417fa45ba0597e5dd32682901080
 Status: Downloaded newer image for portainer/portainer:latest
 docker.io/portainer/portainer:latest
-</pre>
+```
 
 Now we have to start the new portainer with the same storage settings as before so it will keep the configuration details and data. Use the same command you used for the old version to launch it. In my case we'll use the command I've listed at the top which is:
 
-{: .box-note}
-<pre>
+```
 root@portainer:~# docker run -d -p 9000:9000 -p 8000:8000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
 67c671cea3b3408e76c4abe7cda0fb34ad5f733feb52283e4b22b6fb6f3f5f65
-</pre>
+```
 
 Looks good enough. Let's see if it's actually running.
 
 
-{: .box-note}
-<pre>
+```
 root@portainer:~# docker ps
 CONTAINER ID        IMAGE                   COMMAND                  CREATED             STATUS              PORTS                                            NAMES
 67c671cea3b3        portainer/portainer     "/portainer"             15 minutes ago      Up 15 minutes       0.0.0.0:8000->8000/tcp, 0.0.0.0:9000->9000/tcp   portainer
 f8299de001cc        dnknth/ldap-ui:latest   "/usr/bin/hypercorn …"   28 minutes ago      Up 22 minutes       0.0.0.0:32773->5000/tcp                          ldap-ui
-</pre>
+```
 
 It is indeed. In my case when I went to the web inteface everything was up and running with the same config as before using the latest version of portainer. But I'm generally a lucky person. I wish you the same kind of luck.
