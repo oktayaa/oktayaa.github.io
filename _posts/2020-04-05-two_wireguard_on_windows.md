@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "two simultaneous wireguard connections on windows"
+title: "Two simultaneous wireguard connections on windows"
 categories:
   - geeking out
 tags:

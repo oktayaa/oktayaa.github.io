@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "it's virtual all the way down"
+title: "It's virtual all the way down"
 categories:
   - geeking out
 tags:
