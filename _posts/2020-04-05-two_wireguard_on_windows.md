@@ -11,7 +11,8 @@ tags:
 published: true
 ---
 
->*Current `wireguard` client on Windows supports only one connection at a time. You will notice that the title is **two** connections, not **multiple**, because this is just a workaround to add just one more connection. *
+>
+Current `wireguard` client on Windows supports only one connection at a time. You will notice that the title is **two** connections, not **multiple**, because this is just a workaround to add just one more connection.
 
 
 This will be brief. Basically wireguard allows only one connection. However there's another gui for wireguard on windows which can be used without disconnecting wireguard. This is possible because each uses its own tun adapter.
