@@ -20,3 +20,8 @@ This will be brief. Basically wireguard currently only allows one connection on 
 So the instructions are to use the official wireguard connection for one of the tunnels and the `tunsafe` client for the other one. I believe both clients will have multiple connections on the gui in the near future.
 
 Note: wireguard people don't seem to like tunsafe people. So don't be surprised If you've never heard about tunsafe before. It's an open source client just like wireguard's and uses the same wireguard server software. In other words, they just make a client. As a bonus, their client comes with a preconfigured connection for their vpn service which is good for testing or to use in a pinch.
+
+Addendum: The tunsafe changelog claims multiple connections since December of 2018.
+
+`6.The 'tunsafe' command line tool supports multiple wireguard
+  sessions simultaneously using different tun interfaces.`
