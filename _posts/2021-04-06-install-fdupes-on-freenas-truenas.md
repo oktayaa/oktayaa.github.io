@@ -1,12 +1,10 @@
 ---
 layout: post
-title: How to change LXC container IP
+title: How to install fdupes (or almost any package) on FreeNAS/TrueNAS
 categories:
   - geeking out
 tags:
-  - linux
-  - lxc
-  - lxd
+  - FreeNAS
 published: true
 ---
 
